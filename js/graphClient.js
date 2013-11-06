@@ -1,4 +1,7 @@
 var sigInst;
+var currentEdge;
+var isPlaying;
+var intervalID;
 
 /**
  * Initializes the graph, reads GEXF file and stores the graph in sigInst variable
@@ -25,6 +28,13 @@ function init() {
   // Parse a GEXF encoded file to fill the graph
   // (requires "sigma.parseGexf.js" to be included)
   sigInst.parseGexf('xml/test.gexf');
+
+  // Set starting edge to 1
+  currentEdge = 1;
+  // Start with the animation paused
+  isPlaying = false;
+  // Draw the initial state of the graph
+  update2();
 }
 
 if (document.addEventListener) {
@@ -61,17 +71,16 @@ function parseDate(date) {
 }
 
 /**
- * Filter's the graph's nodes and edges according to the current date
+ * Filter's the graph's nodes and edges according to the supplied date
+ * @param  {JavaScript Date} filterDate
  */
-function filter() {
-  var filterDate = parseDate(getDate());
-
+function filter(filterDate) {
   sigInst.iterNodes(function(node) {
     var date = parseDate(getAttr(node, 'Born'));
 
-    console.log(node);
-    console.log(date);
-    console.log(filterDate);
+    // console.log(node);
+    // console.log(date);
+    // console.log(filterDate);
 
     if (filterDate >= date) {
       node.hidden = 0;
@@ -83,9 +92,9 @@ function filter() {
   sigInst.iterEdges(function(edge) {
     var date = parseDate(getAttr(edge, 'Born'));
 
-    console.log(edge);
-    console.log(date);
-    console.log(filterDate);
+    // console.log(edge);
+    // console.log(date);
+    // console.log(filterDate);
 
     if (filterDate >= date) {
       edge.hidden = 0;
@@ -119,6 +128,85 @@ function getAttr(node, attr) {
  * re-draws graph
  */
 function update() {
-  filter();
+  var filterDate = parseDate(getDate());
+
+  filter(filterDate);
   draw();
+}
+
+/**
+ * Filters the graph up to the specified edge number
+ * @param  {int} edgeNumber
+ */
+function filterUpToEdge(edgeNumber) {
+  try {
+    var edge = sigInst.getEdges(edgeNumber);
+    var date = parseDate(getAttr(edge, 'Born'));
+
+    filter(date);
+  } catch (err) {
+    console.log("Found the following error: " + err);
+    reset();
+  }
+}
+
+/**
+ * Updates the whole page, first filters to current edge, then re-draws graph
+ * @return {[type]}
+ */
+function update2() {
+  filterUpToEdge(currentEdge);
+  draw();
+
+  // update UI
+  var date = parseDate(getAttr(sigInst.getEdges(currentEdge), 'Born'));
+
+  document.getElementById('currentEdge').innerHTML = currentEdge;
+  document.getElementById('date').innerHTML = date;
+}
+
+/**
+ * Sets the next edge
+ */
+function next() {
+  currentEdge++;
+  update2();
+}
+
+/**
+ * Sets the previous edge
+ */
+function prev() {
+  currentEdge--;
+  update2();
+}
+
+/**
+ * Resets current edge to 1
+ */
+function reset() {
+  currentEdge = 1;
+  update2();
+}
+
+/**
+ * Advances to next edge every second or stops animation if already playing
+ */
+function play() {
+  if (isPlaying) {
+    // stop playing
+    clearInterval(intervalID);
+
+    document.getElementById('play').innerHTML = 'Play';
+  } else {
+    // start playing
+    intervalID = setInterval(
+      function() {
+        next();
+      },
+      1000);
+
+    document.getElementById('play').innerHTML = 'Pause';
+  }
+  isPlaying = !isPlaying;
 }
