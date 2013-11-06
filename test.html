@@ -9,8 +9,16 @@
   		<div id="sigma" style="position: absolute; width: 100%; height: 100%">
   		</div>
   	</div>
+    <div>
+      <a href="#" onclick="prev()">Prev</a>
+      <span id="currentEdge">1</span>
+      <a href="#" onclick="next()">Next</a>
+      <br/>
+      <a href="#" onclick="play()"><span id="play">Play</span></a>
+    </div>
+    <hr/>
     <a href="#" onclick="draw()">Dibuja!</a>
-    <p><a href="#" onclick="filter()">Filtra:</a>
+    <p><a href="#" onclick="update()">Actualiza:</a>
       <input type="date" id="date" onchange="update()"/>
     </p>
   </body>

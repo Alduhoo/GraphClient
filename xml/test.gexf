@@ -26,7 +26,7 @@
         <viz:size value="10.0"></viz:size>
         <viz:color r="0" g="255" b="0"></viz:color>
       </node>
-      <node id="4" label="Vicente Fox Quesada">
+      <node id="3" label="Vicente Fox Quesada">
         <attvalues>
           <attvalue for="Born" value="4/1/2005"></attvalue>
         </attvalues>
@@ -35,12 +35,12 @@
       </node>
     </nodes>
     <edges>
-      <edge id="3" source="1" target="2">
+      <edge id="1" source="1" target="2">
         <attvalues>
           <attvalue for="Born" value="3/1/2005"></attvalue>
         </attvalues>
       </edge>
-      <edge id="5" source="1" target="4">
+      <edge id="2" source="1" target="3">
         <attvalues>
           <attvalue for="Born" value="5/1/2005"></attvalue>
         </attvalues>

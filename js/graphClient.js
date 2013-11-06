@@ -1,4 +1,7 @@
 var sigInst;
+var currentEdge;
+var isPlaying;
+var intervalID;
 
 /**
  * Initializes the graph, reads GEXF file and stores the graph in sigInst variable
@@ -25,6 +28,13 @@ function init() {
   // Parse a GEXF encoded file to fill the graph
   // (requires "sigma.parseGexf.js" to be included)
   sigInst.parseGexf('xml/test.gexf');
+
+  // Set starting edge to 1
+  currentEdge = 1;
+  // Start with the animation paused
+  isPlaying = false;
+  // Draw the initial state of the graph
+  update2();
 }
 
 if (document.addEventListener) {
@@ -61,11 +71,10 @@ function parseDate(date) {
 }
 
 /**
- * Filter's the graph's nodes and edges according to the current date
+ * Filter's the graph's nodes and edges according to the supplied date
+ * @param  {JavaScript Date} filterDate
  */
-function filter() {
-  var filterDate = parseDate(getDate());
-
+function filter(filterDate) {
   sigInst.iterNodes(function(node) {
     var date = parseDate(getAttr(node, 'Born'));
 
@@ -119,6 +128,52 @@ function getAttr(node, attr) {
  * re-draws graph
  */
 function update() {
-  filter();
+  var filterDate = parseDate(getDate());
+
+  filter(filterDate);
   draw();
+}
+
+function filterUpToEdge(edgeNumber) {
+  var edge = sigInst.getEdges(edgeNumber);
+  var date = parseDate(getAttr(edge, 'Born'));
+
+  filter(date);
+}
+
+function update2() {
+  filterUpToEdge(currentEdge);
+  draw();
+
+  // update UI
+  document.getElementById('currentEdge').innerHTML = currentEdge;
+}
+
+function next() {
+  currentEdge++;
+  update2();
+}
+
+function prev() {
+  currentEdge--;
+  update2();
+}
+
+function play() {
+  if (isPlaying) {
+    // stop playing
+    clearInterval(intervalID);
+
+    document.getElementById('play').innerHTML = 'Play';
+  } else {
+    // start playing
+    intervalID = setInterval(
+      function() {
+        next();
+      },
+      1000);
+
+    document.getElementById('play').innerHTML = 'Pause';
+  }
+  isPlaying = !isPlaying;
 }
