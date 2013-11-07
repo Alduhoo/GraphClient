@@ -4,6 +4,18 @@
     <script src="js/sigma.min.js"></script>
     <script src="js/sigma.parseGexf.js"></script>
     <script src="js/graphClient.js"></script>
+    <script>
+      var sigInst;
+      var currentEdge;
+      var isPlaying;
+      var intervalID;
+
+      if (document.addEventListener) {
+        document.addEventListener("DOMContentLoaded", init, false);
+      } else {
+        window.onload = init;
+      }
+    </script>
   </head>
   <body bgcolor="white">
   	<div style="position: relative; width: 500px; height: 500px">
@@ -11,6 +23,8 @@
   		</div>
   	</div>
     <div>
+      <input type="range" id="slider" name="edge" value="1" min="1" max="2" step="1" onmouseup="slider()">
+      <br/>
       <a href="#" onclick="prev()">Prev</a>
       <span id="currentEdge">1</span>
       <a href="#" onclick="next()">Next</a>

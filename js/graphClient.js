@@ -1,10 +1,6 @@
-var sigInst;
-var currentEdge;
-var isPlaying;
-var intervalID;
-
 /**
- * Initializes the graph, reads GEXF file and stores the graph in sigInst variable
+ * Initializes the graph, reads GEXF file and stores the graph in sigInst
+ * variable
  */
 function init() {
   // Instanciate sigma.js and customize rendering :
@@ -34,8 +30,8 @@ function init() {
    */
   var popUp;
 
-  // This function is used to generate the attributes list from the node attributes.
-  // Since the graph comes from GEXF, the attibutes look like:
+  // This function is used to generate the attributes list from the node
+  // attributes. Since the graph comes from GEXF, the attibutes look like:
   // [
   //   { attr: 'Lorem', val: '42' },
   //   { attr: 'Ipsum', val: 'dolores' },
@@ -99,12 +95,6 @@ function init() {
   isPlaying = false;
   // Draw the initial state of the graph
   update2();
-}
-
-if (document.addEventListener) {
-  document.addEventListener("DOMContentLoaded", init, false);
-} else {
-  window.onload = init;
 }
 
 /**
@@ -227,6 +217,7 @@ function update2() {
 
   document.getElementById('currentEdge').innerHTML = currentEdge;
   document.getElementById('date').innerHTML = date;
+  $('#slider').val(currentEdge);
 }
 
 /**
@@ -273,4 +264,16 @@ function play() {
     document.getElementById('play').innerHTML = 'Pause';
   }
   isPlaying = !isPlaying;
+}
+
+/**
+ * Function that handles onmouseup event for the slider, gets its new value and
+ * sets the currentEdge to that value
+ */
+function slider() {
+  var value = $('#slider').val();
+
+  console.log(value);
+  currentEdge = value;
+  update2();
 }
