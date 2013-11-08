@@ -91,6 +91,8 @@ function init() {
 
   // Set starting edge to 1
   currentEdge = 1;
+  // Set max edges to slider
+  $('#slider').attr('max', sigInst.getEdgesCount());
   // Start with the animation paused
   isPlaying = false;
   // Draw the initial state of the graph
@@ -273,7 +275,7 @@ function play() {
 function slider() {
   var value = $('#slider').val();
 
-  console.log(value);
+  // console.log(value);
   currentEdge = value;
   update2();
 }
