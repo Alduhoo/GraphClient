@@ -1,3 +1,5 @@
+var filterAttribute = '0';
+
 /**
  * Initializes the graph, reads GEXF file and stores the graph in sigInst
  * variable
@@ -23,7 +25,7 @@ function init() {
 
   // Parse a GEXF encoded file to fill the graph
   // (requires "sigma.parseGexf.js" to be included)
-  sigInst.parseGexf('xml/test.gexf');
+  sigInst.parseGexf('xml/generado_por_pygexf.gexf');
 
   /**
    * Now, here is the code that shows the popup :
@@ -38,12 +40,30 @@ function init() {
   //   ...
   //   { attr: 'Sit',   val: 'amet' }
   // ]
+  /*
   function attributesToString(attr) {
     return '' +
       attr.map(function(o){
         return '' + o.attr + ' : ' + o.val + '';
       }).join('') +
       '';
+  }
+  */
+  function attributesToString(attr) {
+    var result = "";
+    var filterDate = parseDate(getDate());
+
+    for (var i = 1; i < attr.length; i += 2) {
+      var date = attr[i - 1];
+      var value = attr[i];
+
+      if (parseDate(date.val) <= filterDate) {
+        result += date.val + ': ' + value.val + '\n';
+      }
+    }
+
+    // console.log(result);
+    return result;
   }
 
   function showNodeInfo(event) {
@@ -132,7 +152,7 @@ function parseDate(date) {
  */
 function filter(filterDate) {
   sigInst.iterNodes(function(node) {
-    var date = parseDate(getAttr(node, 'Born'));
+    var date = parseDate(getAttr(node, filterAttribute));
 
     // console.log(node);
     // console.log(date);
@@ -146,7 +166,7 @@ function filter(filterDate) {
   });
 
   sigInst.iterEdges(function(edge) {
-    var date = parseDate(getAttr(edge, 'Born'));
+    var date = parseDate(getAttr(edge, filterAttribute));
 
     // console.log(edge);
     // console.log(date);
@@ -197,7 +217,7 @@ function update() {
 function filterUpToEdge(edgeNumber) {
   try {
     var edge = sigInst.getEdges(edgeNumber);
-    var date = parseDate(getAttr(edge, 'Born'));
+    var date = parseDate(getAttr(edge, filterAttribute));
 
     filter(date);
   } catch (err) {
@@ -211,14 +231,14 @@ function filterUpToEdge(edgeNumber) {
  * @return {[type]}
  */
 function update2() {
-  filterUpToEdge(currentEdge);
+  // filterUpToEdge(currentEdge);
   draw();
 
   // update UI
-  var date = parseDate(getAttr(sigInst.getEdges(currentEdge), 'Born'));
+  var date = parseDate(getAttr(sigInst.getEdges(currentEdge), filterAttribute));
 
   document.getElementById('currentEdge').innerHTML = currentEdge;
-  document.getElementById('date').innerHTML = date;
+  document.getElementById('date-banner').innerHTML = date;
   $('#slider').val(currentEdge);
 }
 
