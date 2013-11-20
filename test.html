@@ -1,0 +1,84 @@
+<html>
+  <head>
+  <link href="style.css" rel="stylesheet" type="text/css" media="screen" />
+  <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700|Archivo+Narrow:400,700" rel="stylesheet" type="text/css">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="js/sigma.min.js"></script>
+	<script src="js/sigma.parseGexf.js"></script>
+	<script src="js/graphClient.js"></script>
+	<script>
+	  var sigInst;
+	  var currentEdge;
+	  var isPlaying;
+	  var intervalID;
+
+	  if (document.addEventListener) {
+		document.addEventListener("DOMContentLoaded", init, false);
+	  } else {
+		window.onload = init;
+	  }
+	</script>
+  </head>
+	<div id="header">
+		<div id="logo">
+		
+			<h1>Visualización dinámica de la evolución de redes de influencia política</h1>
+		
+			</div>
+</div>
+<div id="menu-wrapper">
+	<div id="menu">
+		<ul>
+			<li class="current_page_item"><a href="#">Homepage</a></li>
+			<li><a href="article.html">Articulo</a></li>
+			<li><a href="specs.html">Especificaciones</a></li>
+			<li><a href="contact.html">Contacto</a></li>
+		</ul>
+	</div>
+	</div>
+	
+	<div style="clear: both;">&nbsp;</div>
+	<div style="clear: both;">&nbsp;</div>						
+	<div id="sigma" ></div>
+	<div id="wrapper"> 
+	
+	 <div id="content">
+		<div class="post">
+			<div class="post">	
+				<h1 class="title">Las relaciones sociales de Elba Esther Gordillo</h1>
+					<div style="clear: both;">&nbsp;</div>
+						<div class="entry">
+							<p> Analisis de la evolución de las redes de influencia de la maestra Elba Esther Gordillo ("La Maestra"), secretaria general del sindicato de maestros de México desde 1993 a 2011. Los datos necesarios para este caso específico, se obtuvieron principalmente a partir de la columna Plaza Pública de Miguel Angel Granados Chapa, que se publicaba en los periódicos del Grupo Reforma. Se localizó en estas columnas el nombre de la Maestra para encontrar en alguna columna la mención de un segundo nombre relacionado con ella, y buscando después este segundo nombre para encontrar algunas relaciones-de-relaciones relevantes y presentar entonces un grafo y una evolución más completa de la influencia política de este personaje</p>
+								<div id="logo">
+								</br>
+	 									<h2 class="title">Controles</h2>
+	 									 </br>
+	 									 <p> Utilizando el siguiente menu puede navegar el grafo mostrando las distintas relaciones de Elba Esther Gordillo atraves de los años.</p>
+									
+									<div id="slider">
+									
+					 					<input type="range" id="slider"  name="edge" value="1" min="1" max="10" step="1" onmouseup="slider()">
+	 									 </br>
+	 									 </div>
+	  									<a href="#" onclick="prev()"return="false;"><img src="images/left_arrow.png"height="40"legend="Previous"></a>
+	  									<a href="#" onclick="next()"return="false;"><img src="images/right_arrow.png"height="40" legend="Next"></a>
+	  									<a href="#" onclick="play()"return="false;"><span id="play"><img src="images/play.png"height="40"alt="Play"></span></a>
+	  									<a href="#" onclick="reset()"return="false;"><img src="images/reset.png"height="40"alt="Reset"></a>
+	  	  								<span id="currentEdge"></span>	  
+		  								<h3 id="date">Fecha Actual</h3>
+		  								<div style="clear: both;">&nbsp;</div>
+		  								
+								</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	<!-- end #page --> 
+</div>
+<div style="clear: both;">&nbsp;</div>
+<div id="footer">
+	<p>2013 ITESM|Realizado por SNAITESM</p>
+</div>
+  </body>
+  
+</html>

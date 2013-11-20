@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+Design by Free CSS Templates
+http://www.freecsstemplates.org
+Released for free under a Creative Commons Attribution 2.5 License
+
+Name       : Stuffy
+Description: A two-column, fixed-width design with dark color scheme.
+Version    : 1.0
+Released   : 20130720
+
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>Visualizacion</title>
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700|Archivo+Narrow:400,700" rel="stylesheet" type="text/css">
+<link href="style.css" rel="stylesheet" type="text/css" media="screen" />
+</head>
+<body>
+<div id="header">
+		<div id="logo">
+		
+			<h1>Visualización dinámica de la evolución de redes de influencia política</h1>
+		
+			</div>
+</div>
+<div id="menu-wrapper">
+	<div id="menu">
+		<ul>
+			<li class="current_page_item"><a href="test.html">Homepage</a></li>
+			<li><a href="article.html">Articulo</a></li>
+			<li><a href="specs.html">Especificaciones</a></li>
+			<li><a href="contact.html">Contacto</a></li>
+		</ul>
+	</div>
+	</div>
+	
+				<div style="clear: both;">&nbsp;</div>
+<div id="wrapper"> 
+	<!-- end #header -->
+		<div id="page">
+		<div id="page-bgtop">
+			<div id="page-bgbtm">
+
+				<div id="logo">
+					<div class="post">
+					<div class="post">
+						<h3 class="title"><a href="#">Especificación de requerimientos</a></h3>
+						<div style="clear: both;">&nbsp;</div>
+						<div class="entry">
+<p align="justify"><p align="center"><b>Visualizacion dinámica de redes de influencia y su aplicación en ciencias políticas</b></p>
+
+</br>
+<b>Introducción
+</b>
+<p>Las personas tienden a establecer distintos tipos de relaciones entre sí; relaciones que evolucionan a lo largo del tiempo. Por medio de este sistema se podrá observar gráficamente de qué manera van evolucionando estas relaciones; en particular, podrá observarse el momento de creación de una relación; cómo va evolucionando la confianza o la fuerza de la relación que tienen entre sí diferentes personas; y en qué momento se rompe la relación. Todo esto se visualiza por medio de un grafo que va cambiando en en el tiempo.
+
+La entrada de datos al sistema consiste de dos spreadsheets, uno que indica los nodos del grafo (que corresponden a personas); y otro que indica las relaciones entre las personas. Los spreadsheets includen artibutos fechados de nodos y relaciones; por ejemplo en que momento deben aparecer o desaparecer,  o en que momento cambia la fuerza de una relación y por qué cambió
+
+</p>
+</br>
+<b>Objetivos</b>
+<p>El objetivo del proyecto es visualizar las relaciones que ha tenido una persona en específico a lo largo de los años con diferentes personas. Se busca identificar el tipo de relacion; por ejemplo el grado de amistad o enemistad, además de la fecha en que sucedieron estos cambios en las relaciones. El sistema debe permitir ir viendo estos cambios a lo largo del tiempo mostrando cómo aparecen y desaparecen las relaciones entre los individuos.
+</p>
+</br></br>
+<b>Alcance (scope) </b>
+<p>El proyecto generará una red dinámica del historial social de la persona y que además cambiará de acuerdo al tiempo. La red se visualizará a través de una página web con opciones para ver el estado de las relaciones del grupo en una fecha en específico o ver todo el desarrollo de la red de relaciones en un intervalo de tiempo. 
+
+Este resultado se producirá con software especializado para visualización de redes y con información de la persona y sus relaciones que es tomada de spreadsheets cuyo formato se describe más adelante
+</p>
+</br></br>
+<b>Restricciones</b>
+<p align="justify">El sistema tiene ciertos límites en cuanto al tamaño de la red que es capaz de manejar y visualizar de manera efectiva; estos límites se describen más adelante</p>
+</br><b>Diagrama arquitectónico</b></br></br>	
+<img src="images/diagrama.png">
+</br></br>
+<b>Perfiles de usuario</b>
+<p align="justify"><i>Sociologo</i>
+    El usuario promedio se define como un sociólogo interesado en visualizar información que representa las relaciones de las redes sociales de un determinado individuo o grupo de personas. Por ejemplo, un sociólogo/analista político podría estar interesado en visualizar la evolución de la influencia de un cierto actor político sobre otros actores. O un sociólogo interesado en un determinado grupo de usuarios de Facebook podría interesarse en la evolución de relaciones de amistad/enemistad entre las personas que conforman ese grupo.
+</p>
+</br>
+<b>Casos de uso </b>
+<img src="images/casos.png">
+</br>
+<b>Modelos de datos</b>
+<p align="justify">Se utilizarán diferentes fuentes y modelos de datos. Entre los cuales se encuentran dos hojas de cálculo, Google SpreadSheets, de las cuales una representa los nodos, de nombre Nodos, y otra representa las relaciones de estos nodos, Links. A continuación una breve descripción del modelo de datos de las hojas de calculo.
+</p>
+</br>
+<b><i>Links</i></b>
+<ul><li>Sociologo
+</li>
+	<ul>
+	<li>Usuario que definió el link</li>
+	</ul>
+<li>Actor 1</li>
+	<ul>
+	<li>Primer nodo que forma parte la relación.</li>
+	</ul>
+<li>Actor 2</li>
+	<ul>
+	<li>Segundo nodo que forma parte la relación.</li>
+	</ul>
+	<li>Valor estimado de la relación</li>
+	<li>Fecha</li>
+	<ul>
+	<li>Fecha estimada en la que inició la relación.
+</li>
+	</ul>
+	<li>Fragmento de texto copiado de la fuente
+</li>
+	<ul>
+	<li>Fragmento de texto de la fuente que evidencia la relación entre los actores.
+</li>
+	</ul>
+	<li>Fuente</li>
+	<ul>
+	<li>Recurso del cual se deduce la relación.
+</li>
+	</ul>
+	<li>Fecha de la Fuente</li>
+	<ul>
+	<li>Fecha en que la fuente fue creada.</li>
+	</ul>
+	<li>Notas adicionales</li>
+	<ul>
+	<li>Información adicional no mencionada en los campos anteriores.</li>
+	</ul>
+</ul>
+<b><i>Nodos</i></b>
+<ul><li>Sociologo
+</li>
+	<ul>
+	<li>Usuario que definió el nodo</li>
+	</ul>
+	<li>Actor 1</li>
+	<ul>
+	<li>Nombre del actor representado por el nodo.</li>
+	</ul>
+	<li>Fecha</li>
+	<ul>
+	<li>Fecha estimada del dato.
+</li>
+</ul>
+<li>Descripción breve del dato
+</li>
+	<ul>
+	<li>Descripción de un dato del actor</li>
+	</ul>
+	</ul>
+<ul><li>Fuente del dato
+</li>
+	<ul>
+	<li>Recurso en el cual se encontró al Actor.
+</li>
+	</ul>
+	<li>Fecha de la fuente
+</li>
+	<ul>
+	<li>Fecha en que la fuente fue creada.s.</li>
+	</ul>
+
+</br>
+
+<p align="justify">Además se utilizará la especificación de datos tipo xsd llamado GEXF(Graph Exchange XML Format), el cual es un lenguaje que describe estructuras de redes complejas, sus datos asociados y dinámicas. Se puede encontrar más informacion en la siguiente liga: <a href="http://gexf.net/format/">http://gexf.net/format/</a>
+</p>
+</br>
+<b>Conclusiones</b>
+<p align="justify"> sobre el procedimiento en general</p>
+</br>
+<b>Bibliografia</b>
+</br>
+<i align="justify" style="italic">Heer, J., Shneiderman, B. (2012).Interactive Dynamics for Visual Analysis. Communications of the ACM, 55(4), 45-54. doi:10.1145/2133806.2133821. Obtenido el 7 de noviembre de 2013.
+</i>
+</br>
+<i align="justify"style="italic">Jia, Y., Garland, M., & Hart, J. C. (2011). Social Network Clustering and Visualization using Hierarchical Edge Bundles. Computer Graphics Forum, 30(8), 2314-2327. doi:10.1111/j.1467-8659.2011.02037.x. Obtenido el 7 de noviembre de 2013.
+</i>
+						</div>
+					</div>
+						
+					</div>
+					
+				
+				</div>
+				
+				<div style="clear: both;">&nbsp;</div>
+			</div>
+		</div>
+	</div>
+	<!-- end #page --> 
+</div>
+
+<div id="footer">
+	<p>2013 ITESM|Realizado por SNAITESM</p>
+</div>
+<!-- end #footer -->
+</body>
+</html>
