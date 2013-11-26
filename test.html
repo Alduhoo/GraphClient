@@ -23,7 +23,7 @@
   		</div>
   	</div>
     <div>
-      <input type="range" id="slider" name="edge" value="1" min="1" max="2" step="1" onmouseup="slider()">
+      <input type="range" id="slider" name="edge" value="1" min="1" max="2" step="1" onchange="slider()">
       <br/>
       <a href="#" onclick="prev()">Prev</a>
       <span id="currentEdge">1</span>
@@ -35,10 +35,5 @@
       <br/>
       <h3 id="date-banner"></h3>
     </div>
-    <hr/>
-    <a href="#" onclick="draw()">Dibuja!</a>
-    <p><a href="#" onclick="update()">Actualiza:</a>
-      <input type="date" id="date" onchange="update()"/>
-    </p>
   </body>
 </html>

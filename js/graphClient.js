@@ -1,4 +1,5 @@
 var filterAttribute = '0';
+var numEdges = 0;
 
 /**
  * Initializes the graph, reads GEXF file and stores the graph in sigInst
@@ -25,7 +26,7 @@ function init() {
 
   // Parse a GEXF encoded file to fill the graph
   // (requires "sigma.parseGexf.js" to be included)
-  sigInst.parseGexf('xml/generado_por_pygexf.gexf');
+  sigInst.parseGexf('xml/nodos_con_edges.gexf');
 
   /**
    * Now, here is the code that shows the popup :
@@ -110,9 +111,10 @@ function init() {
   sigInst.bind('overnodes',showNodeInfo).bind('outnodes',hideNodeInfo).draw();
 
   // Set starting edge to 1
-  currentEdge = 1;
+  currentEdge = 0;
   // Set max edges to slider
-  $('#slider').attr('max', sigInst.getEdgesCount());
+  numEdges = sigInst.getEdgesCount();
+  $('#slider').attr('max', numEdges);
   // Start with the animation paused
   isPlaying = false;
   // Draw the initial state of the graph
@@ -131,9 +133,9 @@ function draw() {
  * @return {string}
  */
 function getDate() {
-  var fecha = document.getElementById('date').value.split('-');
-
-  return fecha[1] + "/" + fecha[2] + "/" + fecha[0];
+  // var fecha = document.getElementById('date').value.split('-');
+  var edge = sigInst.getEdges(currentEdge);
+  return getAttr(edge, filterAttribute);
 }
 
 /**
@@ -231,7 +233,7 @@ function filterUpToEdge(edgeNumber) {
  * @return {[type]}
  */
 function update2() {
-  // filterUpToEdge(currentEdge);
+  filterUpToEdge(currentEdge);
   draw();
 
   // update UI
@@ -255,6 +257,9 @@ function next() {
  */
 function prev() {
   currentEdge--;
+  if (currentEdge < 0) {
+    currentEdge = numEdges - 1;
+  }
   update2();
 }
 
@@ -262,7 +267,7 @@ function prev() {
  * Resets current edge to 1
  */
 function reset() {
-  currentEdge = 1;
+  currentEdge = (currentEdge + 1) % numEdges;
   update2();
 }
 
@@ -281,7 +286,7 @@ function play() {
       function() {
         next();
       },
-      1000);
+      500);
 
     document.getElementById('play').innerHTML = 'Pause';
   }
