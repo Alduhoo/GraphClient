@@ -1,3 +1,6 @@
+var filterAttribute = '0';
+var numEdges = 0;
+
 /**
  * Initializes the graph, reads GEXF file and stores the graph in sigInst
  * variable
@@ -16,14 +19,14 @@ function init() {
     maxNodeSize: 5,
     minEdgeSize: 1,
     maxEdgeSize: 1,
-    sideMargin: 50
+    sideMargin: 50,
   }).mouseProperties({
     maxRatio: 32
   });
 
   // Parse a GEXF encoded file to fill the graph
   // (requires "sigma.parseGexf.js" to be included)
-  sigInst.parseGexf('xml/test.gexf');
+  sigInst.parseGexf('xml/nodos_con_edges.gexf');
 
   /**
    * Now, here is the code that shows the popup :
@@ -38,6 +41,7 @@ function init() {
   //   ...
   //   { attr: 'Sit',   val: 'amet' }
   // ]
+  /*
   function attributesToString(attr) {
     return '' +
       attr.map(function(o){
@@ -45,13 +49,32 @@ function init() {
       }).join('') +
       '';
   }
+  */
+  function attributesToString(attr) {
+    var result = "";
+    var filterDate = parseDate(getDate());
+
+    for (var i = 1; i < attr.length; i += 2) {
+      var date = attr[i - 1];
+      var value = attr[i];
+
+      if (parseDate(date.val) <= filterDate) {
+        result += date.val + ': ' + value.val + '\n';
+      }
+    }
+
+    // console.log(result);
+    return result;
+  }
 
   function showNodeInfo(event) {
     popUp && popUp.remove();
 
     var node;
+    var edgeLabel;
     sigInst.iterNodes(function(n){
       node = n;
+      edgeLabel = getEdges(n);
     },[event.content[0]]);
 
     popUp = $(
@@ -77,6 +100,8 @@ function init() {
       'top': node.displayY+15
     });
 
+    popUp.append("\n" + edgeLabel);
+
     $('ul',popUp).css('margin','0 0 0 20px');
 
     $('#sigma').append(popUp);
@@ -90,9 +115,10 @@ function init() {
   sigInst.bind('overnodes',showNodeInfo).bind('outnodes',hideNodeInfo).draw();
 
   // Set starting edge to 1
-  currentEdge = 1;
+  currentEdge = 0;
   // Set max edges to slider
-  $('#slider').attr('max', sigInst.getEdgesCount());
+  numEdges = sigInst.getEdgesCount();
+  $('#slider').attr('max', numEdges);
   // Start with the animation paused
   isPlaying = false;
   // Draw the initial state of the graph
@@ -111,9 +137,9 @@ function draw() {
  * @return {string}
  */
 function getDate() {
-  var fecha = document.getElementById('date').value.split('-');
-
-  return fecha[1] + "/" + fecha[2] + "/" + fecha[0];
+  // var fecha = document.getElementById('date').value.split('-');
+  var edge = sigInst.getEdges(currentEdge);
+  return getAttr(edge, filterAttribute);
 }
 
 /**
@@ -132,7 +158,7 @@ function parseDate(date) {
  */
 function filter(filterDate) {
   sigInst.iterNodes(function(node) {
-    var date = parseDate(getAttr(node, 'Born'));
+    var date = parseDate(getAttr(node, filterAttribute));
 
     // console.log(node);
     // console.log(date);
@@ -146,7 +172,7 @@ function filter(filterDate) {
   });
 
   sigInst.iterEdges(function(edge) {
-    var date = parseDate(getAttr(edge, 'Born'));
+    var date = parseDate(getAttr(edge, filterAttribute));
 
     // console.log(edge);
     // console.log(date);
@@ -197,7 +223,7 @@ function update() {
 function filterUpToEdge(edgeNumber) {
   try {
     var edge = sigInst.getEdges(edgeNumber);
-    var date = parseDate(getAttr(edge, 'Born'));
+    var date = parseDate(getAttr(edge, filterAttribute));
 
     filter(date);
   } catch (err) {
@@ -215,10 +241,10 @@ function update2() {
   draw();
 
   // update UI
-  var date = parseDate(getAttr(sigInst.getEdges(currentEdge), 'Born'));
+  var date = parseDate(getAttr(sigInst.getEdges(currentEdge), filterAttribute));
 
   document.getElementById('currentEdge').innerHTML = currentEdge;
-  document.getElementById('date').innerHTML = date;
+  document.getElementById('date-banner').innerHTML = date;
   $('#slider').val(currentEdge);
 }
 
@@ -235,6 +261,9 @@ function next() {
  */
 function prev() {
   currentEdge--;
+  if (currentEdge < 0) {
+    currentEdge = numEdges - 1;
+  }
   update2();
 }
 
@@ -242,7 +271,7 @@ function prev() {
  * Resets current edge to 1
  */
 function reset() {
-  currentEdge = 1;
+  currentEdge = (currentEdge + 1) % numEdges;
   update2();
 }
 
@@ -278,4 +307,26 @@ function slider() {
   // console.log(value);
   currentEdge = value;
   update2();
+}
+
+function getEdges(node) {
+  var result = "";
+  var filterDate = parseDate(getDate());
+
+  // console.log(node.id + " is being hovered");
+
+  sigInst.iterEdges(function(edge) {
+    if (edge.source == node.id || edge.target == node.id) {
+      if (parseDate(getAttr(edge, filterAttribute)) <= filterDate &&
+          !sigInst.getNodes(edge.target).hidden &&
+          !sigInst.getNodes(edge.source).hidden) {
+        result += edge.label + '\n';
+        // console.log(edge);
+        // console.log(edge.source + "->" + edge.target);
+      }
+    }
+  });
+
+  // console.log(result);
+  return result;
 }
