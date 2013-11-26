@@ -271,7 +271,7 @@ function prev() {
  * Resets current edge to 1
  */
 function reset() {
-  currentEdge = (currentEdge + 1) % numEdges;
+  currentEdge = 0;
   update2();
 }
 

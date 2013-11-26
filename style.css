@@ -53,7 +53,7 @@ ul, ol {
 }
 
 a {
-	
+
 	color: #383838;
 }
 
@@ -87,7 +87,7 @@ img
 }
 
 #slider{
-position: relative; 
+position: relative;
 
 
 }
@@ -95,7 +95,7 @@ position: relative;
 float:right;
 padding-left:30px;
 padding-top:30px;
-width: 50%; 
+width: 50%;
 height: 90%;
 background: rgba(54, 25, 25, .2);
 
@@ -230,7 +230,7 @@ background: rgba(54, 25, 25, .2);
 	width: 500px;
 	padding-top: 30px;
 	padding-left: 50px;
-	
+
 }
 
 .post {
