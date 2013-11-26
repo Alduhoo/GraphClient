@@ -19,7 +19,7 @@ function init() {
     maxNodeSize: 5,
     minEdgeSize: 1,
     maxEdgeSize: 1,
-    sideMargin: 50
+    sideMargin: 50,
   }).mouseProperties({
     maxRatio: 32
   });
@@ -71,8 +71,10 @@ function init() {
     popUp && popUp.remove();
 
     var node;
+    var edgeLabel;
     sigInst.iterNodes(function(n){
       node = n;
+      edgeLabel = getEdges(n);
     },[event.content[0]]);
 
     popUp = $(
@@ -97,6 +99,8 @@ function init() {
       'left': node.displayX,
       'top': node.displayY+15
     });
+
+    popUp.append("\n" + edgeLabel);
 
     $('ul',popUp).css('margin','0 0 0 20px');
 
@@ -303,4 +307,26 @@ function slider() {
   // console.log(value);
   currentEdge = value;
   update2();
+}
+
+function getEdges(node) {
+  var result = "";
+  var filterDate = parseDate(getDate());
+
+  // console.log(node.id + " is being hovered");
+
+  sigInst.iterEdges(function(edge) {
+    if (edge.source == node.id || edge.target == node.id) {
+      if (parseDate(getAttr(edge, filterAttribute)) <= filterDate &&
+          !sigInst.getNodes(edge.target).hidden &&
+          !sigInst.getNodes(edge.source).hidden) {
+        result += edge.label + '\n';
+        // console.log(edge);
+        // console.log(edge.source + "->" + edge.target);
+      }
+    }
+  });
+
+  // console.log(result);
+  return result;
 }
