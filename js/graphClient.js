@@ -26,7 +26,7 @@ function init() {
 
   // Parse a GEXF encoded file to fill the graph
   // (requires "sigma.parseGexf.js" to be included)
-  sigInst.parseGexf('xml/nodos_con_edges.gexf');
+  sigInst.parseGexf('xml/red_politica_mex.gexf');
 
   /**
    * Now, here is the code that shows the popup :
@@ -243,8 +243,8 @@ function update2() {
   // update UI
   var date = parseDate(getAttr(sigInst.getEdges(currentEdge), filterAttribute));
 
-  document.getElementById('currentEdge').innerHTML = currentEdge;
-  document.getElementById('date-banner').innerHTML = date;
+  // document.getElementById('currentEdge').innerHTML = currentEdge;
+  document.getElementById('date-banner').innerHTML = date.toDateString();
   $('#slider').val(currentEdge);
 }
 
