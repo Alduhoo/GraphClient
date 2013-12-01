@@ -150,7 +150,7 @@
           <attvalue for="0" value="11/30/2005"/>
           <attvalue for="1" value="Ex-Secretario de relaciones Exteriores"/>
         </attvalues>
-        <viz:size value="300"/>
+        <viz:size value="200"/>
         <viz:position x="0" y="0" z="0.0"/>
       </node>
       <node id="17" label="Jorge Castaneda Gutman">

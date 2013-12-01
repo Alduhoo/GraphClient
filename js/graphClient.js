@@ -1,5 +1,6 @@
 var filterAttribute = '0';
 var numEdges = 0;
+var greyColor = '#666';
 
 /**
  * Initializes the graph, reads GEXF file and stores the graph in sigInst
@@ -105,11 +106,51 @@ function init() {
     $('ul',popUp).css('margin','0 0 0 20px');
 
     $('#sigma').append(popUp);
+
+    // grey out
+    var nodes = event.content;
+        var neighbors = {};
+        sigInst.iterEdges(function(e){
+          if(nodes.indexOf(e.source)<0 && nodes.indexOf(e.target)<0){
+            if(!e.attr['grey']){
+              e.attr['true_color'] = e.color;
+              e.color = greyColor;
+              e.attr['grey'] = 1;
+            }
+          }else{
+            e.color = e.attr['grey'] ? e.attr['true_color'] : e.color;
+            e.attr['grey'] = 0;
+
+            neighbors[e.source] = 1;
+            neighbors[e.target] = 1;
+          }
+        }).iterNodes(function(n){
+          if(!neighbors[n.id]){
+            if(!n.attr['grey']){
+              n.attr['true_color'] = n.color;
+              n.color = greyColor;
+              n.attr['grey'] = 1;
+            }
+          }else{
+            n.color = n.attr['grey'] ? n.attr['true_color'] : n.color;
+            n.attr['grey'] = 0;
+          }
+        }).draw(2,2,2);
   }
 
   function hideNodeInfo(event) {
     popUp && popUp.remove();
     popUp = false;
+
+    // grey out
+    sigInst.iterEdges(function(e){
+      e.color = e.attr['grey'] ? e.attr['true_color'] : e.color;
+      e.attr['grey'] = 0;
+    }).iterNodes(function(n){
+      // n.color = n.attr['grey'] ? n.attr['true_color'] : n.color;
+      n.color = '#000';
+      n.attr['grey'] = 0;
+    }).draw(2,2,2);
   }
 
   sigInst.bind('overnodes',showNodeInfo).bind('outnodes',hideNodeInfo).draw();
