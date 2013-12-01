@@ -52,7 +52,7 @@ function init() {
   }
   */
   function attributesToString(attr) {
-    var result = "";
+    var result = "Attributes:</br>";
     var filterDate = parseDate(getDate());
 
     for (var i = 1; i < attr.length; i += 2) {
@@ -60,7 +60,7 @@ function init() {
       var value = attr[i];
 
       if (parseDate(date.val) <= filterDate) {
-        result += date.val + ': ' + value.val + '\n';
+        result += '<li>' + date.val + ': ' + value.val + '</li>';
       }
     }
 
@@ -96,12 +96,17 @@ function init() {
       'background': '#fff',
       'color': '#000',
       'box-shadow': '0 0 4px #666',
-      'position': 'absolute',
+      'position': 'relative',
       'left': node.displayX,
-      'top': node.displayY+15
+      'top': node.displayY+15,
+      'width': '400px',
+      'height': '200px',
+      'overflow-y': 'scroll'
     });
 
-    popUp.append("\n" + edgeLabel);
+    if (edgeLabel.length > 0) {
+      popUp.append("Links:</br>" + edgeLabel);
+    }
 
     $('ul',popUp).css('margin','0 0 0 20px');
 
@@ -141,7 +146,9 @@ function init() {
   function hideNodeInfo(event) {
     popUp && popUp.remove();
     popUp = false;
+  }
 
+  function greyIn(event) {
     // grey out
     sigInst.iterEdges(function(e){
       e.color = e.attr['grey'] ? e.attr['true_color'] : e.color;
@@ -153,7 +160,7 @@ function init() {
     }).draw(2,2,2);
   }
 
-  sigInst.bind('overnodes',showNodeInfo).bind('outnodes',hideNodeInfo).draw();
+  sigInst.bind('overnodes',showNodeInfo).bind('outnodes', greyIn).draw();
 
   // Set starting edge to 1
   currentEdge = 0;
@@ -361,7 +368,7 @@ function getEdges(node) {
       if (parseDate(getAttr(edge, filterAttribute)) <= filterDate &&
           !sigInst.getNodes(edge.target).hidden &&
           !sigInst.getNodes(edge.source).hidden) {
-        result += edge.label + '\n';
+        result += '<li>' + edge.label + '</li>';
         // console.log(edge);
         // console.log(edge.source + "->" + edge.target);
       }
