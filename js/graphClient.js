@@ -100,7 +100,7 @@ function init() {
       'left': node.displayX,
       'top': node.displayY+15,
       'width': '400px',
-      'height': '200px',
+      'max-height': '200px',
       'overflow-y': 'scroll'
     });
 
@@ -368,7 +368,15 @@ function getEdges(node) {
       if (parseDate(getAttr(edge, filterAttribute)) <= filterDate &&
           !sigInst.getNodes(edge.target).hidden &&
           !sigInst.getNodes(edge.source).hidden) {
-        result += '<li>' + edge.label + '</li>';
+        var target = sigInst.getNodes(edge.target);
+        var source = sigInst.getNodes(edge.source);
+        if (node.id == target.id) {
+          result += '<li>' + source.label + ' ';
+        } else {
+          result += '<li>' + target.label + ' ';
+        }
+
+        result += '(' + getAttr(edge, filterAttribute) + '): ' + edge.label + '</li>';
         // console.log(edge);
         // console.log(edge.source + "->" + edge.target);
       }
