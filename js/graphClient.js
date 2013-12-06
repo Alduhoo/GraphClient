@@ -203,7 +203,7 @@ function parseDate(date) {
 /**
  * Filter's the graph's nodes and edges according to the supplied date
  * @param  {JavaScript Date} filterDate
- */
+ *
 function filter(filterDate) {
   sigInst.iterNodes(function(node) {
     var date = parseDate(getAttr(node, filterAttribute));
@@ -233,7 +233,7 @@ function filter(filterDate) {
     }
   });
 }
-
+*/
 /**
  * Get's the value of the specified node's or edge's attribute
  * @param  {Node/Edge} node
@@ -273,7 +273,22 @@ function filterUpToEdge(edgeNumber) {
     var edge = sigInst.getEdges(edgeNumber);
     var date = parseDate(getAttr(edge, filterAttribute));
 
-    filter(date);
+    // filter(date);
+
+    // hide every node
+    sigInst.iterNodes(function(node) {
+      node.hidden = 1;
+    });
+    // iterate edges
+    sigInst.iterEdges(function (edge) {
+      if (parseInt(edge.id) <= edgeNumber) {
+        var edges = [edge.source, edge.target];
+        sigInst.iterNodes(function (node) {
+          node.hidden = 0;
+          // console.log(node);
+        }, edges);
+      }
+    });
   } catch (err) {
     console.log("Found the following error: " + err);
     reset();
