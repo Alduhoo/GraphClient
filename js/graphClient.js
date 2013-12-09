@@ -158,9 +158,12 @@ function init() {
       n.color = '#000';
       n.attr['grey'] = 0;
     }).draw(2,2,2);
+    // remove popup after specified time in ms
+    window.setTimeout(removePopUp, 2000);
+    // removePopUp();
   }
 
-  sigInst.bind('overnodes',showNodeInfo).bind('outnodes', greyIn).draw();
+  sigInst.bind('downnodes',showNodeInfo).bind('outnodes', greyIn).draw();
 
   // Set starting edge to 1
   currentEdge = 0;
@@ -386,9 +389,9 @@ function getEdges(node) {
         var target = sigInst.getNodes(edge.target);
         var source = sigInst.getNodes(edge.source);
         if (node.id == target.id) {
-          result += '<li>' + source.label + ' ';
+          result += '<li>con ' + source.label + ' ';
         } else {
-          result += '<li>' + target.label + ' ';
+          result += '<li>con ' + target.label + ' ';
         }
 
         result += '(' + getAttr(edge, filterAttribute) + '): ' + edge.label + '</li>';
@@ -400,4 +403,10 @@ function getEdges(node) {
 
   // console.log(result);
   return result;
+}
+
+function removePopUp()
+{
+  var popUp = $('.node-info-popup');
+  popUp.remove();
 }
