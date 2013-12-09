@@ -69,6 +69,11 @@ function init() {
   }
 
   function showNodeInfo(event) {
+    try {
+        window.clearTimeout(popupID);
+    } catch (err) {
+      console.log("Found the following error: " + err);
+    }
     popUp && popUp.remove();
 
     var node;
@@ -159,7 +164,7 @@ function init() {
       n.attr['grey'] = 0;
     }).draw(2,2,2);
     // remove popup after specified time in ms
-    window.setTimeout(removePopUp, 2000);
+    popupID = window.setTimeout(removePopUp, 2000);
     // removePopUp();
   }
 
